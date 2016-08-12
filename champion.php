@@ -63,7 +63,7 @@
 
         <?php
           $apiKey = "6e7e852a-40df-447a-acf8-fe7cc07bdd4c";
-          $arrayOfChampions = array ("Aatrox","Ahri","Akali","Alistar","Amumu","Anivia","Annie","Ashe","Aurelion Sol","Azir","Bard","Blitzcrank","Brand","Braum","Caitlyn","Cassiopeia","Cho'Gath","Corki","Darius","Diana","Dr. Mundo","Draven","Ekko","Elise","Evelynn","Ezreal","Fiddlesticks","Fiora","Fizz","Galio","Gangplank","Garen","Gnar","Gragas","Graves","Hecarim","Heimerdinger","Illaoi","Irelia","Janna","Jarvan IV","Jax","Jayce","Jhin","Jinx","Kalista","Karma","Karthus","Kassadin","Katarina","Kayle","Kennen","Kha'Zix","Kindred","Kog'Maw","LeBlanc","Lee Sin","Leona","Lissandra","Lucian","Lulu","Lux","Malphite","Malzahar","Maokai","Master Yi","Miss Fortune","Mordekaiser","Morgana","Nami","Nasus","Nautilus","Nidalee","Nocturne","Nunu","Olaf","Orianna","Pantheon","Poppy","Quinn","Rammus","Rek'Sai","Renekton","Rengar","Riven","Rumble","Ryze","Sejuani","Shaco","Shen","Shyvana","Singed","Sion","Sivir","Skarner","Sona","Soraka","Swain","Syndra","Tahm Kench","Taliyah","Talon","Taric","Teemo","Thresh","Tristana","Trundle","Tryndamere","Twisted Fate","Twitch","Udyr","Urgot","Varus","Vayne","Veigar","Vel'Koz","Vi","Viktor","Vladimir","Volibear","Warwick","Wukong","Xerath","Xin Zhao","Yasuo","Yorick","Zac","Zed","Ziggs","Zilean","Zyra");
+          $arrayOfChampions = array ("Aatrox","Ahri","Akali","Alistar","Amumu","Anivia","Annie","Ashe","AurelionSol","Azir","Bard","Blitzcrank","Brand","Braum","Caitlyn","Cassiopeia","Chogath","Corki","Darius","Diana","DrMundo","Draven","Ekko","Elise","Evelynn","Ezreal","FiddleSticks","Fiora","Fizz","Galio","Gangplank","Garen","Gnar","Gragas","Graves","Hecarim","Heimerdinger","Illaoi","Irelia","Janna","JarvanIV","Jax","Jayce","Jhin","Jinx","Kalista","Karma","Karthus","Kassadin","Katarina","Kayle","Kennen","Khazix","Kindred","KogMaw","Leblanc","LeeSin","Leona","Lissandra","Lucian","Lulu","Lux","Malphite","Malzahar","Maokai","MasterYi","MissFortune","Mordekaiser","Morgana","Nami","Nasus","Nautilus","Nidalee","Nocturne","Nunu","Olaf","Orianna","Pantheon","Poppy","Quinn","Rammus","RekSai","Renekton","Rengar","Riven","Rumble","Ryze","Sejuani","Shaco","Shen","Shyvana","Singed","Sion","Sivir","Skarner","Sona","Soraka","Swain","Syndra","TahmKench","Taliyah","Talon","Taric","Teemo","Thresh","Tristana","Trundle","Tryndamere","TwistedFate","Twitch","Udyr","Urgot","Varus","Vayne","Veigar","Velkoz","Vi","Viktor","Vladimir","Volibear","Warwick","MonkeyKing","Xerath","XinZhao","Yasuo","Yorick","Zac","Zed","Ziggs","Zilean","Zyra");
 
           $urlAllChamp = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=all&api_key=" .$apiKey;
           $jsonObjAllChamp = file_get_contents($urlAllChamp);
@@ -72,14 +72,99 @@
           $allChampData = $jsonOutputAllChamp->data;
           
           //print_r($allChampData->Jax);
-        //  for ($x = 0; $x < count($arrayOfChampions); $x++){
-          //  $championName = $arrayOfChampions[$x];
-          //  $test = $allChampData->$championName;
-      print_r($allChampData);
+         for ($x = 0; $x < count($arrayOfChampions); $x++){
+            $championName = $arrayOfChampions[$x];
+            $allChampion = $allChampData->$championName;
+            $allChampionName = $allChampion->key;
+            $allChampionTitle= $allChampion->title;
+            $allChampionLore = $allChampion->lore;
+            $allChampionBlurb = $allChampion->blurb;
+            $allChampionAllyTipsArray = $allChampion->allytips;
+            $allChampionEnemyTipArry = $allChampion->enemytips;
+            $allChampionPassive = $allChampion->passive;
+            $allChampionAbilities = $allChampion->spells;
 
-         // }
+
+            $allChampionSkinsArray = $allChampion->skins;
+            
+            //image is clickable, once click the skins will display
+            echo "<input type='image' onclick=display2('$championName') width = '10%' src = 'http://ddragon.leagueoflegends.com/cdn/6.16.1/img/champion/$championName.png'/>
+            <p>$championName<p>
+             <br>";
+
+             echo"<p>Passive: $allChampionPassive->name<p>";
+
+             $passiveImage = $allChampionPassive->image;
+             echo"<img src ='http://ddragon.leagueoflegends.com/cdn/6.16.2/img/passive/$passiveImage->full'</>";
+             echo"<p>$allChampionPassive->description $allChampionPassive->sanitizedDescription<p>";
+
+           
+             for ($a = 0; $a < count($allChampionAbilities); $a++){
+              $abilityImage = $allChampionAbilities[$a]->image;
+              $abiltiyName = $allChampionAbilities[$a]->name;
+              $abilityDescription = $allChampionAbilities[$a]->description;
+             // $abilitySanitizedDescription = $allChampionAbilities[$a]->sanitizedDescription;
+              echo "<h3>$abiltiyName</h3>";
+              echo "<img src = 'http://ddragon.leagueoflegends.com/cdn/6.16.2/img/spell/$abilityImage->full'</>";
+              echo"<p>$abilityDescription<p><br>";
+             // echo"<p>$abilitySanitizedDescription<p>";
+             }
+             echo "<h1> Champion Lore </h1>";
+
+             echo"<p>$allChampionLore<p>";
+
+            //added a skip so that the first default skin is not shown
+            $skip = 0;
+            //loop to print out the skins
+            for ($y = 0; $y < count($allChampionSkinsArray); $y++){
+              //using num instead of $y because for some reason the skin numbers jumps,
+              $allChampionSkinName = $allChampionSkinsArray[$y]->name;
+              if($skip != 0){ 
+              $championSkin = $championName ."_" .$allChampionSkinsArray[$y]->num .".jpg";
+              //skins are hidden by default
+              echo "<img class = '$championName championSkin' style='display:none' width = '15%' src = 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$championSkin'>";
+              }
+              else{
+                $skip += 1;
+              }
+            }
+            echo"<br>
+                  <br>";
+
+          }
 
         ?>
+
+        <script>
+
+         function display2(className){
+       
+        if (document.getElementsByClassName(className)[0].style.display == "none"){
+          clearStatSummmaryView();
+          var a = 0;
+          var numOfElements = document.getElementsByClassName(className).length;
+          while (a < numOfElements){
+            document.getElementsByClassName(className)[a].style.display = "inline";
+          a++;
+          }
+        }
+        else{
+           clearStatSummmaryView();
+        }
+      }
+
+
+      function clearStatSummmaryView(){
+        var a = 0;
+          var numOfElements = document.getElementsByClassName("championSkin").length;
+            while (a < numOfElements){
+              document.getElementsByClassName("championSkin")[a].style.display = "none";
+            a++;
+            }
+
+      }
+
+        </script>
       </div>
     </div>
 
@@ -98,3 +183,4 @@
     <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
   </body>
 </html>
+
