@@ -56,6 +56,8 @@
     </nav>
 
 
+
+
     <!-- Static Champions -->
     <div class="container">
       <div class="starter-template">
@@ -63,7 +65,7 @@
 
         <?php
           $apiKey = "6e7e852a-40df-447a-acf8-fe7cc07bdd4c";
-          $arrayOfChampions = array ("Aatrox","Ahri","Akali","Alistar","Amumu","Anivia","Annie","Ashe","AurelionSol","Azir","Bard","Blitzcrank","Brand","Braum","Caitlyn","Cassiopeia","Chogath","Corki","Darius","Diana","DrMundo","Draven","Ekko","Elise","Evelynn","Ezreal","FiddleSticks","Fiora","Fizz","Galio","Gangplank","Garen","Gnar","Gragas","Graves","Hecarim","Heimerdinger","Illaoi","Irelia","Janna","JarvanIV","Jax","Jayce","Jhin","Jinx","Kalista","Karma","Karthus","Kassadin","Katarina","Kayle","Kennen","Khazix","Kindred","KogMaw","Leblanc","LeeSin","Leona","Lissandra","Lucian","Lulu","Lux","Malphite","Malzahar","Maokai","MasterYi","MissFortune","Mordekaiser","Morgana","Nami","Nasus","Nautilus","Nidalee","Nocturne","Nunu","Olaf","Orianna","Pantheon","Poppy","Quinn","Rammus","RekSai","Renekton","Rengar","Riven","Rumble","Ryze","Sejuani","Shaco","Shen","Shyvana","Singed","Sion","Sivir","Skarner","Sona","Soraka","Swain","Syndra","TahmKench","Taliyah","Talon","Taric","Teemo","Thresh","Tristana","Trundle","Tryndamere","TwistedFate","Twitch","Udyr","Urgot","Varus","Vayne","Veigar","Velkoz","Vi","Viktor","Vladimir","Volibear","Warwick","MonkeyKing","Xerath","XinZhao","Yasuo","Yorick","Zac","Zed","Ziggs","Zilean","Zyra");
+          $arrayOfChampions = array ("Aatrox","Ahri","Akali","Alistar","Amumu","Anivia","Annie","Ashe","AurelionSol","Azir","Bard","Blitzcrank","Brand","Braum","Caitlyn","Cassiopeia","Chogath","Corki","Darius","Diana","DrMundo","Draven","Ekko","Elise","Evelynn","Ezreal","FiddleSticks","Fiora","Fizz","Galio","Gangplank","Garen","Gnar","Gragas","Graves","Hecarim","Heimerdinger","Illaoi","Irelia","Janna","JarvanIV","Jax","Jayce","Jhin","Jinx","Kalista","Karma","Karthus","Kassadin","Katarina","Kayle","Kennen","Khazix","Kindred","Kled","KogMaw","Leblanc","LeeSin","Leona","Lissandra","Lucian","Lulu","Lux","Malphite","Malzahar","Maokai","MasterYi","MissFortune","Mordekaiser","Morgana","Nami","Nasus","Nautilus","Nidalee","Nocturne","Nunu","Olaf","Orianna","Pantheon","Poppy","Quinn","Rammus","RekSai","Renekton","Rengar","Riven","Rumble","Ryze","Sejuani","Shaco","Shen","Shyvana","Singed","Sion","Sivir","Skarner","Sona","Soraka","Swain","Syndra","TahmKench","Taliyah","Talon","Taric","Teemo","Thresh","Tristana","Trundle","Tryndamere","TwistedFate","Twitch","Udyr","Urgot","Varus","Vayne","Veigar","Velkoz","Vi","Viktor","Vladimir","Volibear","Warwick","MonkeyKing","Xerath","XinZhao","Yasuo","Yorick","Zac","Zed","Ziggs","Zilean","Zyra");
 
           $urlAllChamp = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=all&api_key=" .$apiKey;
           $jsonObjAllChamp = file_get_contents($urlAllChamp);
@@ -73,6 +75,7 @@
           
           //print_r($allChampData->Jax);
          for ($x = 0; $x < count($arrayOfChampions); $x++){
+          
             $championName = $arrayOfChampions[$x];
             $allChampion = $allChampData->$championName;
             $allChampionName = $allChampion->key;
@@ -84,52 +87,110 @@
             $allChampionPassive = $allChampion->passive;
             $allChampionAbilities = $allChampion->spells;
 
+            $allChampionInfo = $allChampion->info;
 
             $allChampionSkinsArray = $allChampion->skins;
-            
-            //image is clickable, once click the skins will display
-            echo "<input type='image' onclick=display2('$championName') width = '10%' src = 'http://ddragon.leagueoflegends.com/cdn/6.16.1/img/champion/$championName.png'/>
-            <p>$championName<p>
-             <br>";
 
-             echo"<p>Passive: $allChampionPassive->name<p>";
+            $abilityIcon = $championName . "AbilityIcon";
+
+            //div to separate all the champions 
+            echo"<div id = '$championName'>";
+            
+            echo "<h1 style='position:fixed; font-size:25px; list-style-type:none;'>
+
+              <li onclick= search('A')>A</li>
+              <li onclick=search('B')>B</li>
+              <li onclick=search('C')>C</li>
+              <li onclick=search('D')>D</li>
+              <li onclick=search('E')>E</li>
+              <li onclick=search('F')>F</li>
+              <li onclick=search('G')>G</li>
+              <li onclick=search('H')>H</li>
+              <li onclick=search('I')>I</li>
+              <li onclick=search('J')>J</li>
+              <li onclick=search('K')>K</li>
+              <li onclick=search('L')>L</li>
+              <li onclick=search('M')>M</li>
+              <li onclick=search('N')>N</li>
+              <li onclick=search('O')>O</li>
+              <li onclick=search('P')>P</li>
+              <li onclick=search('Q')>Q</li>
+              <li onclick=search('R')>R</li>
+              <li onclick=search('S')>S</li>
+              <li onclick=search('T')>T</li>
+              <li onclick=search('U')>U</li>
+              <li onclick=search('V')>V</li>
+              <li onclick=search('W')>W</li>
+              <li onclick=search('X')>X</li>
+              <li onclick=search('Y')>Y</li>
+              <li onclick=search('Z')>Z</li>
+          
+            </h1>";
+
+            //image is clickable, once click the skins will display
+            echo "<input type='image' onclick=displayChampionAbilityDescription('$championName') src = 'http://ddragon.leagueoflegends.com/cdn/6.16.2/img/champion/$championName.png'/>";
+            echo " <br>";
+
+            echo "<p>Attack: $allChampionInfo->attack /10
+                      Defense: $allChampionInfo->defense
+                      Difficulty: $allChampionInfo->difficulty
+                      Magic: $allChampionInfo->magic</p>";
+
+            // echo"<p>Passive: $allChampionPassive->name<p>";
 
              $passiveImage = $allChampionPassive->image;
-             echo"<img src ='http://ddragon.leagueoflegends.com/cdn/6.16.2/img/passive/$passiveImage->full'</>";
-             echo"<p>$allChampionPassive->description $allChampionPassive->sanitizedDescription<p>";
+             echo"<input type='image' onclick=displayChampionAbilityDescription('$abilityIcon') src ='http://ddragon.leagueoflegends.com/cdn/6.16.2/img/passive/$passiveImage->full' />";
+            // echo"<p class = '$abilityIcon abilityIcon' style='display:none' >$allChampionPassive->description $allChampionPassive->sanitizedDescription</p>";
 
-           
+            
              for ($a = 0; $a < count($allChampionAbilities); $a++){
               $abilityImage = $allChampionAbilities[$a]->image;
               $abiltiyName = $allChampionAbilities[$a]->name;
               $abilityDescription = $allChampionAbilities[$a]->description;
-             // $abilitySanitizedDescription = $allChampionAbilities[$a]->sanitizedDescription;
-              echo "<h3>$abiltiyName</h3>";
-              echo "<img src = 'http://ddragon.leagueoflegends.com/cdn/6.16.2/img/spell/$abilityImage->full'</>";
-              echo"<p>$abilityDescription<p><br>";
-             // echo"<p>$abilitySanitizedDescription<p>";
+             
+
+              //its a mess, i couldnt find a way to pass in two php vairables to a javascrpit function.
+              // it has something to do with strings and quotatation marks. 
+              //instead i passed in one variable, the concatination of the ability name + it's description 
+              //for example "...AbilityIconX" with x being a number from 0-3
+              $abilityIconNum = $abilityIcon .$a;
+              $new = $abilityIconNum . $abilityDescription;
+              //replaceing ' with * 
+              $updatedString=str_replace("'s", "*s", $new);
+              $abilityDescriptionString = '"' .$updatedString .'"';
+             echo "<input type='image' id = '$abilityIconNum' class = 'abilityImage' onclick='displayChampionAbilityDescription($abilityDescriptionString)' style='-webkit-filter: grayscale(75%)' src = 'http://ddragon.leagueoflegends.com/cdn/6.16.2/img/spell/$abilityImage->full' />";
+
+             //after displaying all the ability images, i display a nonvisbale p tag
+             //this will display once the ability images are pressed
+              if ($a==3){
+              echo "<br>";
+              $abilityIconNum2 = $abilityIconNum ."PTag";
+              //i still needed a unique ID because this page will have all the champions 
+              echo "<p id= '$abilityIconNum2' class='abilityDescriptionText' style='display:none' >wrwerwr</p>";
+              }
              }
+             
              echo "<h1> Champion Lore </h1>";
 
-             echo"<p>$allChampionLore<p>";
+             echo"<p>$allChampionLore</p>";
 
             //added a skip so that the first default skin is not shown
-            $skip = 0;
+           // $skip = 0;
             //loop to print out the skins
             for ($y = 0; $y < count($allChampionSkinsArray); $y++){
               //using num instead of $y because for some reason the skin numbers jumps,
               $allChampionSkinName = $allChampionSkinsArray[$y]->name;
-              if($skip != 0){ 
+            //  if($skip != 0){ 
               $championSkin = $championName ."_" .$allChampionSkinsArray[$y]->num .".jpg";
               //skins are hidden by default
-              echo "<img class = '$championName championSkin' style='display:none' width = '15%' src = 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$championSkin'>";
-              }
-              else{
-                $skip += 1;
-              }
+              echo "<img class = 'championSkin' style='display:inline' width = '15%' src = 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$championSkin' />";
+              //}
+              //else{
+              //  $skip += 1;
+              //}
             }
-            echo"<br>
-                  <br>";
+            echo"<br><br>";
+            echo"</div>";
 
           }
 
@@ -137,38 +198,51 @@
 
         <script>
 
-         function display2(className){
-       
-        if (document.getElementsByClassName(className)[0].style.display == "none"){
-          clearStatSummmaryView();
-          var a = 0;
-          var numOfElements = document.getElementsByClassName(className).length;
-          while (a < numOfElements){
-            document.getElementsByClassName(className)[a].style.display = "inline";
-          a++;
-          }
-        }
-        else{
-           clearStatSummmaryView();
-        }
+        //pupose of this function is to change the hidden p tag to view whenever a button is pressed
+        function displayChampionAbilityDescription(className){
+          //im paring the passed in string
+          var abilityDescription = className.substring(className.indexOf("AbilityIcon") + 12);
+          var abilityName = className.substring(0, className.indexOf("AbilityIcon")+11);
+          var abilityIconNum = className.substring(0, className.indexOf("AbilityIcon")+12);
+          var abilityPTag = abilityName.concat("3PTag");
+          
+          clearStatSummmaryView("abilityDescriptionText");
+          document.getElementById(abilityPTag).innerHTML = abilityDescription;
+          document.getElementById(abilityPTag).style.display = "inline";
+
+          document.getElementById(abilityIconNum).setAttribute("style","-webkit-filter:grayscale(0%)");
+
+          //document.getElementById("MasterYiAbilityIcon3").scrollIntoView();
       }
 
-
-      function clearStatSummmaryView(){
+      //will reset the abilitty description view when you click on another champion ability
+      function clearStatSummmaryView(whatToClear){
         var a = 0;
-          var numOfElements = document.getElementsByClassName("championSkin").length;
+        var b = 0;
+        alert
+          var numOfElements = document.getElementsByClassName(whatToClear).length;
+          var numOfElements2 = document.getElementsByClassName("abilityImage").length;
             while (a < numOfElements){
-              document.getElementsByClassName("championSkin")[a].style.display = "none";
+            document.getElementsByClassName(whatToClear)[a].style.display = "none";
             a++;
             }
 
+            while (b < numOfElements2){
+            document.getElementsByClassName("abilityImage")[b].setAttribute("style","-webkit-filter:grayscale(75%)");
+            b++;
+            }
       }
 
+      function search(letter){
+
+        if(letter=='O'){
+          document.getElementById("Olaf").scrollIntoView();
+        }
+      }
         </script>
+      }
       </div>
     </div>
-
-
 
 
     <!-- Bootstrap core JavaScript
