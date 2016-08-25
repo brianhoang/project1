@@ -65,7 +65,41 @@
 
         <?php
           $apiKey = "6e7e852a-40df-447a-acf8-fe7cc07bdd4c";
+          //puttin every champion in an array, although i can probably read in all the champions with an api call.
+          //that way i wont have to manually add in a new element everytime there is a new champion  
           $arrayOfChampions = array ("Aatrox","Ahri","Akali","Alistar","Amumu","Anivia","Annie","Ashe","AurelionSol","Azir","Bard","Blitzcrank","Brand","Braum","Caitlyn","Cassiopeia","Chogath","Corki","Darius","Diana","DrMundo","Draven","Ekko","Elise","Evelynn","Ezreal","FiddleSticks","Fiora","Fizz","Galio","Gangplank","Garen","Gnar","Gragas","Graves","Hecarim","Heimerdinger","Illaoi","Irelia","Janna","JarvanIV","Jax","Jayce","Jhin","Jinx","Kalista","Karma","Karthus","Kassadin","Katarina","Kayle","Kennen","Khazix","Kindred","Kled","KogMaw","Leblanc","LeeSin","Leona","Lissandra","Lucian","Lulu","Lux","Malphite","Malzahar","Maokai","MasterYi","MissFortune","Mordekaiser","Morgana","Nami","Nasus","Nautilus","Nidalee","Nocturne","Nunu","Olaf","Orianna","Pantheon","Poppy","Quinn","Rammus","RekSai","Renekton","Rengar","Riven","Rumble","Ryze","Sejuani","Shaco","Shen","Shyvana","Singed","Sion","Sivir","Skarner","Sona","Soraka","Swain","Syndra","TahmKench","Taliyah","Talon","Taric","Teemo","Thresh","Tristana","Trundle","Tryndamere","TwistedFate","Twitch","Udyr","Urgot","Varus","Vayne","Veigar","Velkoz","Vi","Viktor","Vladimir","Volibear","Warwick","MonkeyKing","Xerath","XinZhao","Yasuo","Yorick","Zac","Zed","Ziggs","Zilean","Zyra");
+
+
+             //clickable alphabet, will be able to search for the first champion with the letter clcicked on 
+            echo "<h1 style='position:fixed; right:10px; font-size:20px; list-style-type:none;'>
+              <li data-toggle='tooltip' data-placement='top' title= 'TESTING' onclick= search('A')>A</li>
+              <li onclick=search('B')>B</li>
+              <li onclick=search('C')>C</li>
+              <li onclick=search('D')>D</li>
+              <li onclick=search('E')>E</li>
+              <li onclick=search('F')>F</li>
+              <li onclick=search('G')>G</li>
+              <li onclick=search('H')>H</li>
+              <li onclick=search('I')>I</li>
+              <li onclick=search('J')>J</li>
+              <li onclick=search('K')>K</li>
+              <li onclick=search('L')>L</li>
+              <li onclick=search('M')>M</li>
+              <li onclick=search('N')>N</li>
+              <li onclick=search('O')>O</li>
+              <li onclick=search('P')>P</li>
+              <li onclick=search('Q')>Q</li>
+              <li onclick=search('R')>R</li>
+              <li onclick=search('S')>S</li>
+              <li onclick=search('T')>T</li>
+              <li onclick=search('U')>U</li>
+              <li onclick=search('V')>V</li>
+              <li onclick=search('W')>W</li>
+              <li onclick=search('X')>X</li>
+              <li onclick=search('Y')>Y</li>
+              <li onclick=search('Z')>Z</li>
+            </h1>";
+
 
           $urlAllChamp = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=all&api_key=" .$apiKey;
           $jsonObjAllChamp = file_get_contents($urlAllChamp);
@@ -92,40 +126,18 @@
             $allChampionSkinsArray = $allChampion->skins;
 
             $abilityIcon = $championName . "AbilityIcon";
+            $loreDescription = $championName ."LoreDescription";
+
+            //this is used in the search function, basically i give each div element a class name starting with the champion name,
+            //when someone searches for a champion, it will find the first instance of that class letter 
+            $firstLetter = $championName[0];
+
 
             //div to separate all the champions 
-            echo"<div id = '$championName'>";
+            echo"<div id = '$championName' class = '$firstLetter'>";
+            echo"<h1>$championName</h1>";
             
-            echo "<h1 style='position:fixed; font-size:25px; list-style-type:none;'>
-
-              <li onclick= search('A')>A</li>
-              <li onclick=search('B')>B</li>
-              <li onclick=search('C')>C</li>
-              <li onclick=search('D')>D</li>
-              <li onclick=search('E')>E</li>
-              <li onclick=search('F')>F</li>
-              <li onclick=search('G')>G</li>
-              <li onclick=search('H')>H</li>
-              <li onclick=search('I')>I</li>
-              <li onclick=search('J')>J</li>
-              <li onclick=search('K')>K</li>
-              <li onclick=search('L')>L</li>
-              <li onclick=search('M')>M</li>
-              <li onclick=search('N')>N</li>
-              <li onclick=search('O')>O</li>
-              <li onclick=search('P')>P</li>
-              <li onclick=search('Q')>Q</li>
-              <li onclick=search('R')>R</li>
-              <li onclick=search('S')>S</li>
-              <li onclick=search('T')>T</li>
-              <li onclick=search('U')>U</li>
-              <li onclick=search('V')>V</li>
-              <li onclick=search('W')>W</li>
-              <li onclick=search('X')>X</li>
-              <li onclick=search('Y')>Y</li>
-              <li onclick=search('Z')>Z</li>
-          
-            </h1>";
+       
 
             //image is clickable, once click the skins will display
             echo "<input type='image' onclick=displayChampionAbilityDescription('$championName') src = 'http://ddragon.leagueoflegends.com/cdn/6.16.2/img/champion/$championName.png'/>";
@@ -155,10 +167,14 @@
               //for example "...AbilityIconX" with x being a number from 0-3
               $abilityIconNum = $abilityIcon .$a;
               $new = $abilityIconNum . $abilityDescription;
+              
+              //right now Khazix is messed up. something to do with <span tag> (not sure why that is there), will come back to it later
               //replaceing ' with * 
-              $updatedString=str_replace("'s", "*s", $new);
-              $abilityDescriptionString = '"' .$updatedString .'"';
-             echo "<input type='image' id = '$abilityIconNum' class = 'abilityImage' onclick='displayChampionAbilityDescription($abilityDescriptionString)' style='-webkit-filter: grayscale(75%)' src = 'http://ddragon.leagueoflegends.com/cdn/6.16.2/img/spell/$abilityImage->full' />";
+              $updatedString=str_replace("'", "*", $new);
+              $updatedString2=str_replace("span", " ", $updatedString);
+              $abilityDescriptionString = '"' .$updatedString2 .'"';
+
+             echo "<input type='image' id = '$abilityIconNum' class = 'abilityImage' data-toggle='tooltip' data-placement='top' title= '$abiltiyName' onclick='displayChampionAbilityDescription($abilityDescriptionString)' style='-webkit-filter: grayscale(75%);' src = 'http://ddragon.leagueoflegends.com/cdn/6.16.2/img/spell/$abilityImage->full' />";
 
              //after displaying all the ability images, i display a nonvisbale p tag
              //this will display once the ability images are pressed
@@ -166,13 +182,35 @@
               echo "<br>";
               $abilityIconNum2 = $abilityIconNum ."PTag";
               //i still needed a unique ID because this page will have all the champions 
-              echo "<p id= '$abilityIconNum2' class='abilityDescriptionText' style='display:none' >wrwerwr</p>";
+              echo "<p id= '$abilityIconNum2' class='abilityDescriptionText' style='display:none;' >wrwerwr </p><br><br>";
               }
              }
-             
-             echo "<h1> Champion Lore </h1>";
 
-             echo"<p>$allChampionLore</p>";
+
+             //remving the single quotes, which causes problems when echoing
+             //$lore=str_replace("'s", "*s", $allChampionLore);
+             //$lore2=str_replace("'", "*", $lore);
+             //$lore3=str_replace('"', "*", $lore2);
+             //$lore4 = '"' .$lore3 .'"';
+
+             //concating the 
+             $champLoreString = $championName . "ChampLore";
+             $champLoreString2 = '"' .$champLoreString .'"';
+
+             $champSkinString = $championName . "ChampSkin";
+             $champSkinString2 = '"' .$champSkinString .'"';
+
+             $championViewString = $championName ."MainView";
+             $championViewString2 = '"' .$championViewString .'"';
+
+             echo "<h4 onclick='mainBodyTextDisplayFunction($champLoreString2 , $championViewString2)' style='display:inline;'>Champion Lore || </h4>";
+             echo "<h4 onclick='mainBodyTextDisplayFunction($champSkinString2 , $championViewString2)' style='display:inline'>Skin || </h4>";
+             echo "<h4 onclick='mainBodyTextDisplayFunction()' style='display:inline'>TEST || </h4>";
+             echo "<h4 onclick='mainBodyTextDisplayFunction()' style='display:inline'>Other</h4>";
+             echo "<br><br>";
+
+
+             echo"<p class = '$champLoreString $championViewString' style ='border-style: solid; border-width:1px; padding: 10px; display:block;' id = $loreDescription >$allChampionLore</p>";
 
             //added a skip so that the first default skin is not shown
            // $skip = 0;
@@ -183,7 +221,7 @@
             //  if($skip != 0){ 
               $championSkin = $championName ."_" .$allChampionSkinsArray[$y]->num .".jpg";
               //skins are hidden by default
-              echo "<img class = 'championSkin' style='display:inline' width = '15%' src = 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$championSkin' />";
+              echo "<img class = '$champSkinString $championViewString viewArea' style='display:none;' width = '15%;' src = 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$championSkin' />";
               //}
               //else{
               //  $skip += 1;
@@ -198,6 +236,34 @@
 
         <script>
 
+        function mainBodyTextDisplayFunction(type, type2){
+          var displaytype = "block";
+
+          if (type.includes("ChampSkin")){
+            displaytype = "inline";
+          }
+
+          clearMainBodyTextDisplayFunction(type2);
+          var x = 0;
+          var numOfElements = document.getElementsByClassName(type).length;
+          while (x < numOfElements){
+            document.getElementsByClassName(type)[x].style.display = displaytype;
+            x++;
+            }
+        }
+
+        function clearMainBodyTextDisplayFunction(type2){
+          var numOfLoreElement = document.getElementsByClassName(type2).length;
+          var x = 0;
+          while (x < numOfLoreElement){
+            document.getElementsByClassName(type2)[x].style.display = "none";
+            x++;
+            }
+
+          
+        }
+
+
         //pupose of this function is to change the hidden p tag to view whenever a button is pressed
         function displayChampionAbilityDescription(className){
           //im paring the passed in string
@@ -209,6 +275,7 @@
           clearStatSummmaryView("abilityDescriptionText");
           document.getElementById(abilityPTag).innerHTML = abilityDescription;
           document.getElementById(abilityPTag).style.display = "inline";
+
 
           document.getElementById(abilityIconNum).setAttribute("style","-webkit-filter:grayscale(0%)");
 
@@ -234,13 +301,12 @@
       }
 
       function search(letter){
+        var searchChampion = document.getElementsByClassName(letter);
+        searchChampion[0].scrollIntoView();
 
-        if(letter=='O'){
-          document.getElementById("Olaf").scrollIntoView();
-        }
       }
         </script>
-      }
+      
       </div>
     </div>
 
@@ -251,6 +317,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../project1/dist/js/bootstrap.min.js"></script>
+
+     <script>
+    // Initialize any Tooltip on this page
+    $(document).ready(function () 
+        {
+            $('[data-toggle="tooltip"]').tooltip();
+        }
+    );
+    </script>     
 
     
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
